@@ -1,0 +1,249 @@
+{UTF-8}
+Porcentaje de educación=
+	0.85
+	~	Dmnl
+	~		|
+
+Tasa de contagio=
+	tasa de transmision incial*(1-efectividad de la educacion*Porcentaje de educación)
+	~	1/year
+	~		|
+
+efectividad de la educacion=
+	0.7
+	~	Dmnl
+	~		|
+
+tasa de transmision incial=
+	0.00025
+	~	1/year
+	~		|
+
+Sin tratamiento=
+	Contagiados del VIH*(1-tasa de tratamiento)
+	~	personas/year
+	~		|
+
+Población total=
+	Población Susceptible+Contagiados sin tratamiento+Contagiados en tratamiento
+	~	personas
+	~		|
+
+Muertes con tratamiento=
+	DELAY1(Tasa de mortalidad, Esperanza de vida con tratamiento )*Contagiados en tratamiento
+	~	personas/year
+	~		|
+
+Contagiados en tratamiento= INTEG (
+	En tratamiento-Muertes con tratamiento,
+		5606)
+	~	personas
+	~		|
+
+Contagiados sin tratamiento= INTEG (
+	Sin tratamiento-Muertes sin tratamiento,
+		1174)
+	~	personas
+	~		|
+
+Esperanza de vida sin tratamiento=
+	3
+	~	year
+	~		|
+
+Esperanza de vida con tratamiento=
+	50
+	~	year
+	~		|
+
+Muertes por VIH= INTEG (
+	Muertes con tratamiento+Muertes sin tratamiento,
+		2200)
+	~	personas
+	~		|
+
+Muertes sin tratamiento=
+	DELAY1(Tasa de mortalidad, Esperanza de vida sin tratamiento )*Contagiados sin tratamiento
+	~	personas/year
+	~		|
+
+tasa de tratamiento=
+	0.825
+	~	1/year
+	~		|
+
+Contagiados del VIH= INTEG (
+	Incidencia de contagios-En tratamiento-Sin tratamiento,
+		6780)
+	~	personas
+	~		|
+
+En tratamiento=
+	Contagiados del VIH*tasa de tratamiento
+	~	personas/year
+	~		|
+
+Incidencia de contagios=
+	Población Susceptible*Tasa de contagio
+	~	personas/year
+	~		|
+
+Incremento poblacional=
+	Población total*tasa de crecimiento neto
+	~	personas/year
+	~		|
+
+Población Susceptible= INTEG (
+	Incremento poblacional-Incidencia de contagios,
+		4.4971e+07)
+	~	personas
+	~		|
+
+tasa de crecimiento neto=
+	0.011
+	~	1/year
+	~		|
+
+Tasa de mortalidad=
+	0.004
+	~	1/year
+	~		|
+
+********************************************************
+	.Control
+********************************************************~
+		Simulation Control Parameters
+	|
+
+FINAL TIME  = 2039
+	~	year
+	~	The final time for the simulation.
+	|
+
+INITIAL TIME  = 2009
+	~	year
+	~	The initial time for the simulation.
+	|
+
+SAVEPER  = 
+        TIME STEP
+	~	year [0,?]
+	~	The frequency with which output is stored.
+	|
+
+TIME STEP  = 1
+	~	year [0,?]
+	~	The time step for the simulation.
+	|
+
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*View 1
+$-1--1--1,0,|12||-1--1--1|-1--1--1|-1--1--1|-1--1--1|-1--1--1|96,96,65,0
+10,1,Contagiados del VIH,1021,390,57,29,3,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,2,Tasa de contagio,657,535,67,67,2,3,0,0,-1,1,0,0,0,0,0,0,0,0
+10,3,Población Susceptible,642,405,53,29,3,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,4,6,3,100,0,0,22,0,192,0,-1--1--1,,1|(758,400)|
+1,5,6,1,4,0,0,22,0,192,0,-1--1--1,,1|(899,400)|
+11,6,0,828,400,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,7,Incidencia de contagios,828,437,61,29,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,8,2,7,1,0,0,0,0,192,0,-1--1--1,,1|(765,529)|
+10,9,Tasa de mortalidad,1534,381,52,52,11,3,0,0,-1,1,0,0,0,0,0,0,0,0
+12,10,48,261,404,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,11,13,10,100,0,0,22,0,192,0,-1--1--1,,1|(347,404)|
+1,12,13,3,4,0,0,22,0,192,0,-1--1--1,,1|(512,404)|
+11,13,0,430,404,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,14,Incremento poblacional,430,441,54,29,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,15,tasa de crecimiento neto,284,544,78,78,11,3,0,0,-1,1,0,0,0,0,0,0,0,0
+1,16,15,14,1,0,0,0,0,192,0,-1--1--1,,1|(382,532)|
+10,17,Población total,445,254,45,45,2,3,0,0,-1,1,0,0,0,0,0,0,0,0
+1,18,17,14,1,0,0,0,0,192,0,-1--1--1,,1|(370,336)|
+1,19,3,17,1,0,0,0,0,192,0,-1--1--1,,1|(512,365)|
+1,20,3,7,1,0,0,0,0,192,0,-1--1--1,,1|(725,351)|
+10,21,Contagiados en tratamiento,1381,174,71,29,3,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,22,Contagiados sin tratamiento,1349,578,73,29,3,3,0,0,-1,1,0,0,0,0,0,0,0,0
+1,23,25,1,100,0,0,22,0,192,0,-1--1--1,,1|(1021,323)|
+1,24,25,21,4,0,0,22,0,192,0,-1--1--1,,3|(1021,166)|(1021,166)|(1165,166)|
+11,25,0,1021,278,6,8,34,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,26,En tratamiento,1083,278,56,29,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,27,29,1,100,0,0,22,0,192,0,-1--1--1,,1|(1021,454)|
+1,28,29,22,4,0,0,22,0,192,0,-1--1--1,,3|(1021,605)|(1021,605)|(1148,605)|
+11,29,0,1021,497,6,8,34,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,30,Sin tratamiento,1083,497,56,29,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,31,tasa de tratamiento,1307,377,90,90,11,3,0,0,-1,1,0,0,0,0,0,0,0,0
+1,32,31,26,1,0,0,0,0,192,0,-1--1--1,,1|(1265,304)|
+1,33,31,30,1,0,0,0,0,192,0,-1--1--1,,1|(1206,504)|
+1,34,1,26,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,35,1,30,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,36,Muertes por VIH,1707,354,57,29,3,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,37,39,21,100,0,0,22,0,192,0,-1--1--1,,1|(1495,174)|
+1,38,39,36,4,0,0,22,0,192,0,-1--1--1,,3|(1708,174)|(1708,174)|(1708,249)|
+11,39,0,1544,174,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,40,Muertes con tratamiento,1544,211,58,29,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,41,43,22,100,0,0,22,0,192,0,-1--1--1,,1|(1480,578)|
+1,42,43,36,4,0,0,22,0,192,0,-1--1--1,,3|(1739,578)|(1739,578)|(1739,480)|
+11,43,0,1544,578,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,44,Muertes sin tratamiento,1544,615,56,29,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,45,Esperanza de vida con tratamiento,1775,105,84,84,11,3,0,0,-1,1,0,0,0,0,0,0,0,0
+1,46,45,40,1,0,0,0,0,192,0,-1--1--1,,1|(1617,112)|
+1,47,9,44,1,0,0,0,0,192,0,-1--1--1,,1|(1621,524)|
+1,48,9,40,1,0,0,0,0,192,0,-1--1--1,,1|(1586,301)|
+1,49,21,40,1,0,0,0,0,192,0,-1--1--1,,1|(1434,246)|
+1,50,22,44,1,0,0,0,0,192,0,-1--1--1,,1|(1431,540)|
+10,51,Esperanza de vida sin tratamiento,1810,632,84,84,11,3,0,0,-1,1,0,0,0,0,0,0,0,0
+1,52,51,44,1,0,0,0,0,192,0,-1--1--1,,1|(1664,672)|
+1,53,21,17,1,0,0,0,0,192,0,-1--1--1,,1|(850,120)|
+10,54,Contagiados sin tratamiento,371,80,78,29,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,55,54,17,1,0,0,0,0,192,0,-1--1--1,,1|(345,150)|
+10,56,Porcentaje de educación,856,649,94,94,11,3,0,0,-1,1,0,0,0,0,0,0,0,0
+1,57,56,2,1,0,0,0,0,192,0,-1--1--1,,1|(762,645)|
+10,58,tasa de transmision incial,477,664,82,82,11,3,0,0,-1,1,0,0,0,0,0,0,0,0
+10,59,efectividad de la educacion,681,743,81,81,11,3,0,0,-1,1,0,0,0,0,0,0,0,0
+1,60,58,2,1,0,0,0,0,192,0,-1--1--1,,1|(554,544)|
+1,61,59,2,1,0,0,0,0,192,0,-1--1--1,,1|(603,667)|
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*View 2
+$-1--1--1,0,|12||-1--1--1|-1--1--1|-1--1--1|-1--1--1|-1--1--1|96,96,100,0
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*View 3
+$-1--1--1,0,|12||-1--1--1|-1--1--1|-1--1--1|-1--1--1|-1--1--1|96,96,100,0
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*View 4
+$-1--1--1,0,|12||-1--1--1|-1--1--1|-1--1--1|-1--1--1|-1--1--1|96,96,82,0
+///---\\\
+:L<%^E!@
+1:current.vdfx
+4:Time
+5:Muertes por VIH
+9:current
+19:65,0
+24:2009
+25:2039
+26:2039
+23:0
+15:0,0,0,0,0,0
+27:0,
+34:0,
+42:0
+72:0
+73:0
+95:0
+96:0
+97:0
+77:0
+78:0
+102:1
+93:0
+94:0
+92:0
+91:0
+90:0
+87:0
+75:
+43:
+103:8,8,8,3,8
+105:0,0,0,0,0,0,0,0,0,0
+104:Vensim Sans|12||0-0-0|0-0-0|-1--1--1|0-0-255|192-192-192|-1--1--1
